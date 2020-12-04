@@ -47,7 +47,21 @@ class Account(models.Model):
         return self.accountNo
 
     def __str__(self):
-        return str(self.customer_id.first_name+" "+str(self.accountNo))
+        return str(self.accountNo)
+
+
+class Transaction(models.Model):
+    sender=models.ForeignKey(Account,related_name='sender',on_delete=models.DO_NOTHING)
+    receiver=models.ForeignKey(Account,related_name='receiver',on_delete=models.DO_NOTHING)
+    amount=models.PositiveIntegerField(blank=False)
+    remarks=models.CharField(max_length=250,blank=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(str(self.sender)+">"+str(self.receiver))
+
+
 
 @receiver(post_save,sender=CustomerProfile)
 def post_save_generate_account_no(sender,instance,created,**kwargs):
