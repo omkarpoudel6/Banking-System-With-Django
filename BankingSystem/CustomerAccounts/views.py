@@ -1,8 +1,13 @@
 from django.shortcuts import render
+from .forms import AccountCreationForm
 
 # Create your views here.
 def createAccount(request):
-    return render(request,'accountcreation.html')
+    form=AccountCreationForm()
+    context={
+        'form':form
+    }
+    return render(request,'accountcreation.html',context)
 
 def viewAccount(reqeust):
     return render(reqeust,'viewaccount.html')

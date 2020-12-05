@@ -13,16 +13,25 @@ class CustomerProfile(models.Model):
         ('104','Fixed Deposit')
     )
 
+    GENDER_CHOICES=(
+        ('M','MALE'),
+        ('F','FEMALE'),
+        ('O','OTHERS')
+    )
+
     first_name=models.CharField(max_length=30,blank=False)
     middle_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=False)
     account_type=models.CharField(max_length=3,choices=CHOICES,default=None)
     address=models.CharField(max_length=100,blank=False)
-    phone=models.CharField(max_length=10)
-    email=models.CharField(max_length=100)
-    father_name=models.CharField(max_length=60)
-    mother_name=models.CharField(max_length=60)
-    grandfather_name=models.CharField(max_length=60)
+    gender=models.CharField(max_length=6,choices=GENDER_CHOICES,default=None)
+    phone=models.CharField(max_length=10, blank=False)
+    email=models.CharField(max_length=100, blank=False)
+    citizenship_no=models.CharField(max_length=60, blank=False,default=None)
+    father_name=models.CharField(max_length=60, blank=False)
+    mother_name=models.CharField(max_length=60, blank=False)
+    grandfather_name=models.CharField(max_length=60, blank=False)
+    spouse_name=models.CharField(max_length=60,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
