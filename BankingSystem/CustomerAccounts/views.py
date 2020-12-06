@@ -25,6 +25,26 @@ def createAccount(request):
         return render(request,'accountcreation.html',context)
 
 def viewAccount(reqeust):
+    if reqeust.method=="POST":
+        account_no=reqeust.POST['account_no']
+        account=Account.objects.get(accountNo=account_no)
+        print(account)
+        if account:
+            customer_id=account.customer_id.id
+            print(customer_id)
+            accountholder=CustomerProfile.objects.get(id=customer_id)
+            print(accountholder.first_name)
+            context={
+                'account':account
+            }
+            return render(reqeust,'viewaccount.html',context)
+        else:
+            context={
+                'error':'Account No Do not match'
+            }
+            return render(reqeust,'viewaccount.html',context)
+        print(account)
+        print(account_no)
     return render(reqeust,'viewaccount.html')
 
 def deposit(request):

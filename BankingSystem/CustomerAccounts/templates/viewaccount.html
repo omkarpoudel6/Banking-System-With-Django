@@ -1,5 +1,50 @@
 {% extends 'base.html' %}
 {% block title %} View Account {% endblock %}
 {% block content %}
-<h1>View Your Account Here</h1>
+<div class="container">
+    <form class="form-inline my-4 mx-auto" method="post">
+        {% csrf_token %}
+      <div class="form-group mx-sm-5 mb-2">
+        <input type="text" class="form-control" id="account_no" placeholder="@Account_NO" name="account_no">
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">View</button>
+    </form>
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+    {% endif %}
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <td><strong>Account No</strong></td>
+          <td>12345678910</td>
+        </tr>
+        <tr>
+          <td><strong>Account Type</strong></td>
+          <td>Saving</td>
+        </tr>
+        <tr>
+          <td><strong>Balance</strong></td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td><strong>Available Balance</strong></td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td><strong>First Name</strong></td>
+          <td>Omkar</td>
+        </tr>
+        <tr>
+          <td><strong>Middle Name</strong></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Last Name</strong></td>
+          <td>Poudel</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 {% endblock %}
