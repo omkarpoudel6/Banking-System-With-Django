@@ -2,9 +2,11 @@
 {% block title %} Create Account {% endblock %}
 {% block content %}
 <div class="container my-4">
+  {% if account_no %}
     <div class="alert alert-success" role="alert">
-      Account Created Sucessfully. Account Number : <span style="color:red;">12345678910</span>
+      Account Created Sucessfully. Account Number : <span style="color:red;">{{account_no}}</span>
     </div>
+  {% endif %}
     <form method="post">
       {% csrf_token %}
       <div class="form-row">

@@ -53,7 +53,7 @@ class Account(models.Model):
             randomNo = random.randint(10000,99999)
             account_no = "2072" + str(randomNo) + account_type
         self.accountNo = account_no
-        return self.accountNo
+        return str(self.accountNo)
 
     def __str__(self):
         return str(self.accountNo)

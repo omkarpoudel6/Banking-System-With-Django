@@ -10,15 +10,19 @@ def createAccount(request):
         if form.is_valid():
             print(form)
             form.save()
-            customer_id=CustomerProfile.objects.filter(first_name=request.POST['first_name'])
-            account_no=Account.objects.filter(customer_id=customer_id)
-            print(account_no)
-
-    form=AccountCreationForm()
-    context={
-        'form':form
-    }
-    return render(request,'accountcreation.html',context)
+            print(request.POST['citizenship_no'])
+            customer_id=CustomerProfile.objects.get(citizenship_no=request.POST['citizenship_no'])
+            account_no=Account.objects.get(customer_id=customer_id)
+            context={
+                'account_no':account_no
+            }
+        return render(request,'accountcreation.html',context)
+    else:
+        form=AccountCreationForm()
+        context={
+            'form':form
+        }
+        return render(request,'accountcreation.html',context)
 
 def viewAccount(reqeust):
     return render(reqeust,'viewaccount.html')
