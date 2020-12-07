@@ -8,7 +8,7 @@ admin.site.register(CustomerProfile)
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    readonly_fields = ['accountNo','customer_id','balance','availableBalance']
+    readonly_fields = ['accountNo','customer_id']
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):

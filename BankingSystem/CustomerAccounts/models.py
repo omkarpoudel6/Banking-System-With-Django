@@ -41,8 +41,7 @@ class CustomerProfile(models.Model):
 class Account(models.Model):
     accountNo=models.CharField(max_length=12,blank=False)
     customer_id=models.OneToOneField(CustomerProfile,on_delete=models.CASCADE)
-    balance=models.PositiveIntegerField(default=1000)
-    availableBalance=models.PositiveIntegerField(default=0)
+    balance=models.PositiveIntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
@@ -57,7 +56,10 @@ class Account(models.Model):
         return str(self.accountNo)
 
     def get_availableBalance(self,balance):
-        return str(balance-1000)
+        if balance==0:
+            return str(0)
+        else:
+            return str(balance-1000)
 
     def __str__(self):
         return str(self.accountNo)

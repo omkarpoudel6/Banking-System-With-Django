@@ -27,15 +27,18 @@ def createAccount(request):
 def viewAccount(reqeust):
     if reqeust.method=="POST":
         account_no=reqeust.POST['account_no']
-        account=Account.objects.get(accountNo=account_no)
-        print(account)
+        account=Account.objects.filter(accountNo=account_no)
         if account:
-            customer_id=account.customer_id.id
+            account2=Account.objects.get(accountNo=account_no)
+            available_balance = account2.get_availableBalance(account2.balance)
+            customer_id=account2.customer_id.id
             print(customer_id)
             accountholder=CustomerProfile.objects.get(id=customer_id)
             print(accountholder.first_name)
+            print(accountholder.account.accountNo)
             context={
-                'account':account
+                'accountholder':accountholder,
+                'available_balance':available_balance
             }
             return render(reqeust,'viewaccount.html',context)
         else:
