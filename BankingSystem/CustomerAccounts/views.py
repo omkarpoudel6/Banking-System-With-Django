@@ -49,6 +49,7 @@ def viewAccount(reqeust):
         print(account)
         print(account_no)
     return render(reqeust,'viewaccount.html')
+#latest
 
 def deposit(request):
     return render(request,'deposit.html')
