@@ -66,15 +66,15 @@ class Account(models.Model):
 
 
 class Transaction(models.Model):
-    sender=models.ForeignKey(Account,related_name='sender',on_delete=models.DO_NOTHING)
-    receiver=models.ForeignKey(Account,related_name='receiver',on_delete=models.DO_NOTHING)
+    account=models.CharField(max_length=12,blank=False)
     amount=models.PositiveIntegerField(blank=False)
     remarks=models.CharField(max_length=250,blank=False)
+    action=models.CharField(max_length=6,blank=False,default="d")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(str(self.sender)+">"+str(self.receiver))
+        return str(str(self.account)+"<"+str(self.amount)+"<"+str(self.remarks))
 
 
 
@@ -85,4 +85,11 @@ def post_save_generate_account_no(sender,instance,created,**kwargs):
         account = Account()
         account.customer_id = instance
         account.accountNo = account.generate_accountNo(instance.account_type)
+        account.save()
+
+@receiver(post_save,sender=Transaction)
+def post_save_add_balance_in_account(sender,instance,created,**kwargs):
+    if created:
+        account=Account.objects.get(accountNo=instance.account)
+        account.balance=int(account.balance)+int(instance.amount)
         account.save()

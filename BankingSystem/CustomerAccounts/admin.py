@@ -12,4 +12,4 @@ class AccountAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    readonly_fields = ['sender','receiver','amount','remarks']
+    readonly_fields = ['account','amount','remarks','action']

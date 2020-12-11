@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from .forms import AccountCreationForm
-from .models import Account,CustomerProfile
+from .models import Account,CustomerProfile,Transaction
 
 # Create your views here.
 def createAccount(request):
@@ -46,13 +47,28 @@ def viewAccount(reqeust):
                 'error':'Account No Do not match'
             }
             return render(reqeust,'viewaccount.html',context)
-        print(account)
-        print(account_no)
     return render(reqeust,'viewaccount.html')
-#latest
 
 def deposit(request):
-    return render(request,'deposit.html')
+    if request.method=="POST":
+        account_no=request.POST['account']
+        amount=request.POST['amount']
+        remarks=request.POST['remarks']
+        if Account.objects.filter(accountNo=account_no):
+            transaction=Transaction()
+            transaction.account=account_no
+            transaction.amount=amount
+            transaction.remarks=remarks
+            transaction.action="Credit"
+            transaction.save()
+            return redirect("/accounts/deposit")
+        else:
+            context={
+                'error':'Account No Error'
+            }
+            return render(request,'deposit.html',context)
+    else:
+        return render(request,'deposit.html')
 
 def withdraw(request):
     return render(request,'withdraw.html')
