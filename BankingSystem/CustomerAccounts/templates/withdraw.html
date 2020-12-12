@@ -1,5 +1,34 @@
 {% extends 'base.html' %}
 {% block title %} withdraw {% endblock %}
 {% block content %}
-<h1>Withdraw money Here</h1>
+<div class="container">
+    <form class="form-inline my-4 mx-auto" method="post" action="{% url 'accounts:view_account' %}">
+        {% csrf_token %}
+      <div class="form-group mx-sm-5 mb-2">
+        <input type="text" class="form-control" id="account_no" placeholder="@Account_NO" name="account_no">
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">View</button>
+    </form>
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+    {% endif %}
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <td><strong>Account No</strong></td>
+          <td>{{accountholder.account.accountNo}}</td>
+        </tr>
+        <tr>
+          <td><strong>Account Type</strong></td>
+          <td>{{accountholder.account_type}}</td>
+        </tr>
+        <tr>
+          <td><strong>Available Balance</strong></td>
+          <td>{{available_balance}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 {% endblock %}

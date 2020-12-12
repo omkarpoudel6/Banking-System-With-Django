@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
 from .forms import AccountCreationForm,DepositForm
 from .models import Account,CustomerProfile,Transaction
