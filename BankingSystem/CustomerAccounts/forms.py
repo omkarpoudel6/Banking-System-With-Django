@@ -9,3 +9,15 @@ class AccountCreationForm(forms.ModelForm):
         # exclude=('created_at','updated_at',)
 
 
+class DepositForm(forms.ModelForm):
+    class Meta:
+        model=Transaction
+        fields=['account','amount','remarks','action','action']
+
+        def clean_amount(self):
+            account_no=self.cleaned_data.get('account')
+            if not Account.objects.get(accountNo=account_no):
+                raise ValidationError('Invalid Account Number')
+            else:
+                return account_no
+

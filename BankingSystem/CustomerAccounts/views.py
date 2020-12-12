@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import AccountCreationForm
+from .forms import AccountCreationForm,DepositForm
 from .models import Account,CustomerProfile,Transaction
 
 # Create your views here.
@@ -51,17 +51,11 @@ def viewAccount(reqeust):
 
 def deposit(request):
     if request.method=="POST":
-        account_no=request.POST['account']
-        amount=request.POST['amount']
-        remarks=request.POST['remarks']
-        if Account.objects.filter(accountNo=account_no):
-            transaction=Transaction()
-            transaction.account=account_no
-            transaction.amount=amount
-            transaction.remarks=remarks
-            transaction.action="Credit"
-            transaction.save()
-            return redirect("/accounts/deposit")
+        deposit_form=DepositForm(request.POST)
+        if deposit_form.is_valid():
+            print(deposit_form)
+            deposit_form.save()
+            return redirect('/accounts/deposit/')
         else:
             context={
                 'error':'Account No Error'

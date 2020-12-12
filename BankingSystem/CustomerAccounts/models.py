@@ -69,7 +69,7 @@ class Transaction(models.Model):
     account=models.CharField(max_length=12,blank=False)
     amount=models.PositiveIntegerField(blank=False)
     remarks=models.CharField(max_length=250,blank=False)
-    action=models.CharField(max_length=6,blank=False,default="d")
+    action=models.CharField(max_length=6,blank=False,default="Credit")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
