@@ -12,9 +12,9 @@ class AccountCreationForm(forms.ModelForm):
 class DepositForm(forms.ModelForm):
     class Meta:
         model=Transaction
-        fields=['account','amount','remarks','action','action']
+        fields=['account','amount','remarks','action']
 
-        def clean_amount(self):
+        def clean_account(self):
             account_no=self.cleaned_data.get('account')
             if not Account.objects.get(accountNo=account_no):
                 raise ValidationError('Invalid Account Number')

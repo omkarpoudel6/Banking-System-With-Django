@@ -2,7 +2,7 @@
 {% block title %} withdraw {% endblock %}
 {% block content %}
 <div class="container">
-    <form class="form-inline my-4 mx-auto" method="post" action="{% url 'accounts:view_account' %}">
+    <form class="form-inline my-4 mx-auto" method="post" action="{% url 'accounts:withdraw_money' %}">
         {% csrf_token %}
       <div class="form-group mx-sm-5 mb-2">
         <input type="text" class="form-control" id="account_no" placeholder="@Account_NO" name="account_no">
@@ -21,6 +21,18 @@
           <td>{{accountholder.account.accountNo}}</td>
         </tr>
         <tr>
+          <td><strong>First Name</strong></td>
+          <td>{{accountholder.first_name}}</td>
+        </tr>
+        <tr>
+          <td><strong>Middle Name</strong></td>
+          <td>{{accountholder.middle_name}}</td>
+        </tr>
+        <tr>
+          <td><strong>Last Name</strong></td>
+          <td>{{accountholder.last_name}}</td>
+        </tr>
+        <tr>
           <td><strong>Account Type</strong></td>
           <td>{{accountholder.account_type}}</td>
         </tr>
@@ -30,5 +42,16 @@
         </tr>
       </tbody>
     </table>
+
+    {% if show_amount_form %}
+        <form class="form-inline my-4 mx-auto" method="post" action="{% url 'accounts:withdraw_money' %}">
+            {% csrf_token %}
+          <div class="form-group mx-sm-5 mb-2">
+            <input type="hidden" name="account_no_for_balance" value="{{accountholder.account.accountNo}}">
+            <input type="text" class="form-control" id="amount" placeholder="@Amount" name="amount">
+          </div>
+          <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+        </form>
+    {% endif %}
 </div>
 {% endblock %}

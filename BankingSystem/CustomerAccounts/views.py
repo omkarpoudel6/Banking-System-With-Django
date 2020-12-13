@@ -25,9 +25,9 @@ def createAccount(request):
         }
         return render(request,'accountcreation.html',context)
 
-def viewAccount(reqeust):
-    if reqeust.method=="POST":
-        account_no=reqeust.POST['account_no']
+def viewAccount(request):
+    if request.method=="POST":
+        account_no=request.POST['account_no']
         account=Account.objects.filter(accountNo=account_no)
         if account:
             account2=Account.objects.get(accountNo=account_no)
@@ -41,13 +41,13 @@ def viewAccount(reqeust):
                 'accountholder':accountholder,
                 'available_balance':available_balance
             }
-            return render(reqeust,'viewaccount.html',context)
+            return render(request,'viewaccount.html',context)
         else:
             context={
                 'error':'Account No Do not match'
             }
-            return render(reqeust,'viewaccount.html',context)
-    return render(reqeust,'viewaccount.html')
+            return render(request,'viewaccount.html',context)
+    return render(request,'viewaccount.html')
 
 def deposit(request):
     if request.method=="POST":
@@ -65,4 +65,33 @@ def deposit(request):
         return render(request,'deposit.html')
 
 def withdraw(request):
-    return render(request,'withdraw.html')
+    if request.method == "POST":
+        if 'account_no' in request.POST:
+            account_no = request.POST['account_no']
+            account = Account.objects.filter(accountNo=account_no)
+            if account:
+                account2 = Account.objects.get(accountNo=account_no)
+                available_balance = account2.get_availableBalance(account2.balance)
+                customer_id = account2.customer_id.id
+                accountholder = CustomerProfile.objects.get(id=customer_id)
+                context = {
+                    'accountholder': accountholder,
+                    'available_balance': available_balance,
+                    'show_amount_form':True
+                }
+                return render(request, 'withdraw.html', context)
+            else:
+                context = {
+                    'error': 'Account No Do not match'
+                }
+                return render(request, 'withdraw.html', context)
+        if 'amount' in request.POST:
+            amount=request.POST['amount']
+            account_no=request.POST['account_no_for_balance']
+            print(amount)
+            print(account_no)
+            account=Account.objects.get(accountNo=account_no)
+            print(account.balance)
+            return HttpResponse("To withdraw money")
+
+    return render(request, 'withdraw.html')
