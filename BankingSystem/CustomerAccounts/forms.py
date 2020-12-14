@@ -14,10 +14,11 @@ class DepositForm(forms.ModelForm):
         model=Transaction
         fields=['account','amount','remarks','action']
 
-        def clean_account(self):
-            account_no=self.cleaned_data.get('account')
-            if not Account.objects.get(accountNo=account_no):
-                raise ValidationError('Invalid Account Number')
-            else:
-                return account_no
+    def clean_account(self,*args,**kwargs):
+        account_no=self.cleaned_data.get('account')
+        print(account_no)
+        if not Account.objects.filter(accountNo=account_no):
+            raise forms.ValidationError('Invalid Account Number')
+        else:
+            return account_no
 

@@ -64,6 +64,7 @@ def deposit(request):
     else:
         return render(request,'deposit.html')
 
+
 def withdraw(request):
     if request.method == "POST":
         if 'account_no' in request.POST:
