@@ -1,6 +1,6 @@
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
-from .forms import AccountCreationForm,DepositForm
+from .forms import AccountCreationForm,DepositForm,WithdrawForm
 from .models import Account,CustomerProfile,Transaction
 
 # Create your views here.
@@ -9,7 +9,6 @@ def createAccount(request):
         form=AccountCreationForm(request.POST)
         print(form)
         if form.is_valid():
-            print(form)
             form.save()
             print(request.POST['citizenship_no'])
             customer_id=CustomerProfile.objects.get(citizenship_no=request.POST['citizenship_no'])
@@ -66,6 +65,7 @@ def deposit(request):
 
 
 def withdraw(request):
+    withdraw_form=WithdrawForm()
     if request.method == "POST":
         if 'account_no' in request.POST:
             account_no = request.POST['account_no']
@@ -87,12 +87,19 @@ def withdraw(request):
                 }
                 return render(request, 'withdraw.html', context)
         if 'amount' in request.POST:
-            amount=request.POST['amount']
-            account_no=request.POST['account_no_for_balance']
-            print(amount)
-            print(account_no)
-            account=Account.objects.get(accountNo=account_no)
-            print(account.balance)
-            return HttpResponse("To withdraw money")
+            withdrawForm=WithdrawForm(request.POST)
+            print(withdrawForm)
+            if withdrawForm.is_valid():
+                withdrawForm.save()
+                return redirect("/accounts/withdraw/")
+            else:
+                context={
+                    'error':'Invalid Balance'
+                }
+                return render(request,'withdraw.html',context)
 
-    return render(request, 'withdraw.html')
+    context={
+        'form':withdraw_form
+    }
+
+    return render(request, 'withdraw.html',context)

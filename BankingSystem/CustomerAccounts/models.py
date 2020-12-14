@@ -69,12 +69,15 @@ class Transaction(models.Model):
     account=models.CharField(max_length=12,blank=False)
     amount=models.PositiveIntegerField(blank=False)
     remarks=models.CharField(max_length=250,blank=False)
-    action=models.CharField(max_length=6,blank=False,default="Credit")
+    action=models.CharField(max_length=6,blank=False)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(str(self.account)+"<"+str(self.amount)+"<"+str(self.remarks))
+        if self.action=="Credit":
+            return str(str(self.account)+"+"+str(self.amount)+"<"+str(self.remarks))
+        if self.action=="Debit":
+            return str(str(self.account) + "-" + str(self.amount) + "<" + str(self.remarks))
 
 
 
@@ -89,7 +92,16 @@ def post_save_generate_account_no(sender,instance,created,**kwargs):
 
 @receiver(post_save,sender=Transaction)
 def post_save_add_balance_in_account(sender,instance,created,**kwargs):
-    if created:
+    if created and instance.action=="Credit":
         account=Account.objects.get(accountNo=instance.account)
         account.balance=int(account.balance)+int(instance.amount)
         account.save()
+    elif created and instance.action=="Debit":
+        account = Account.objects.get(accountNo=instance.account)
+        account.balance = int(account.balance) - int(instance.amount)
+        account.save()
+
+# @receiver(post_save,sender=Transaction)
+# def post_sace_reduce_balance_in_account(sender,instance,created,**kwargs):
+#     if created and instance.action=="Debit":
+#         account

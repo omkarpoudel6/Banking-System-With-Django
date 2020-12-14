@@ -22,3 +22,8 @@ class DepositForm(forms.ModelForm):
         else:
             return account_no
 
+class WithdrawForm(forms.ModelForm):
+    class Meta:
+        model=Transaction
+        fields=['account','amount','remarks','action']
+
