@@ -32,13 +32,11 @@ def viewAccount(request):
             account2=Account.objects.get(accountNo=account_no)
             available_balance = account2.get_availableBalance(account2.balance)
             customer_id=account2.customer_id.id
-            print(customer_id)
             accountholder=CustomerProfile.objects.get(id=customer_id)
-            print(accountholder.first_name)
-            print(accountholder.account.accountNo)
             context={
                 'accountholder':accountholder,
-                'available_balance':available_balance
+                'available_balance':available_balance,
+                'show_buttons':True
             }
             return render(request,'viewaccount.html',context)
         else:
