@@ -47,7 +47,7 @@
       </tbody>
     </table>
   {% if show_buttons %}
-    <button type="button" class="btn btn-info">View Transaction</button>
+    <a href="/accounts/transaction/{{accountholder.account.accountNo}}" class="btn btn-info">View Transaction</a>
     <button type="button" class="btn btn-info">Update</button>
   {% endif %}
 </div>

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="alert alert-primary" role="alert">
+      Account Number : {{account_no}}
+    </div>
+    <button type="button" class="btn btn-primary my-3">Print</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Debit</th>
+          <th scope="col">Credit</th>
+          <th scope="col">Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trans in transaction %}
+          <tr>
+              <td>{{trans.created_at}}</td>
+              {% if trans.action == "Debit" %}
+                <td>{{trans.amount}}</td>
+              {% else %}
+                <td>-</td>
+              {% endif %}
+              {% if trans.action == "Credit" %}
+                <td>{{trans.amount}}</td>
+              {% else %}
+                <td>-</td>
+              {% endif %}
+              <td>{{trans.remarks}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock content %}

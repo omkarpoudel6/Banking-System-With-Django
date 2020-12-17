@@ -101,3 +101,12 @@ def withdraw(request):
     }
 
     return render(request, 'withdraw.html',context)
+
+def transaction(request,id):
+    transaction=Transaction.objects.filter(account=id).order_by("-created_at")
+    print(transaction)
+    context={
+        'account_no':id,
+        'transaction':transaction
+    }
+    return render(request,'transaction.html',context)
