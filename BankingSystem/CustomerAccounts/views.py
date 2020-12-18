@@ -26,24 +26,43 @@ def createAccount(request):
 
 def viewAccount(request):
     if request.method=="POST":
-        account_no=request.POST['account_no']
-        account=Account.objects.filter(accountNo=account_no)
-        if account:
-            account2=Account.objects.get(accountNo=account_no)
-            available_balance = account2.get_availableBalance(account2.balance)
-            customer_id=account2.customer_id.id
-            accountholder=CustomerProfile.objects.get(id=customer_id)
-            context={
-                'accountholder':accountholder,
-                'available_balance':available_balance,
-                'show_buttons':True
-            }
-            return render(request,'viewaccount.html',context)
-        else:
-            context={
-                'error':'Account No Do not match'
-            }
-            return render(request,'viewaccount.html',context)
+        if 'account_no' in request.POST:
+            account_no=request.POST['account_no']
+            account=Account.objects.filter(accountNo=account_no)
+            if account:
+                account2=Account.objects.get(accountNo=account_no)
+                available_balance = account2.get_availableBalance(account2.balance)
+                customer_id=account2.customer_id.id
+                accountholder=CustomerProfile.objects.get(id=customer_id)
+                context={
+                    'accountholder':accountholder,
+                    'available_balance':available_balance,
+                    'show_buttons':True
+                }
+                return render(request,'viewaccount.html',context)
+            else:
+                context={
+                    'error':'Account No Do not match'
+                }
+                return render(request,'viewaccount.html',context)
+
+        elif 'account_number' in request.POST:
+            account_no=request.POST['account_number']
+            print(account_no)
+            account=Account.objects.get(accountNo=account_no)
+            account.first_name=request.POST['first_name']
+            account.middle_name = request.POST['middle_name']
+            account.last_name = request.POST['last_name']
+            account.address = request.POST['address']
+            account.phone = request.POST['phone']
+            account.email = request.POST['email']
+            account.father_name = request.POST['father_name']
+            account.mother_name = request.POST['mother_name']
+            account.grandfather_name = request.POST['grandfather_name']
+            account.spouse_name = request.POST['spouse_name']
+            account.save()
+            print(account.middle_name)
+            return redirect("/accounts/viewaccount/")
     return render(request,'viewaccount.html')
 
 def deposit(request):

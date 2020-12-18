@@ -27,3 +27,8 @@ class WithdrawForm(forms.ModelForm):
         model=Transaction
         fields=['account','amount','remarks','action']
 
+# class CustomerProfileUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model=CustomerProfile
+#         fields=['first_name','middle_name','last_name','address','phone','email','father_name','mother_name','grandfather_name','spouse_name']
+
