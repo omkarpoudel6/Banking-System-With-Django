@@ -46,22 +46,20 @@ def viewAccount(request):
                 }
                 return render(request,'viewaccount.html',context)
 
-        elif 'account_number' in request.POST:
-            account_no=request.POST['account_number']
-            print(account_no)
-            account=Account.objects.get(accountNo=account_no)
-            account.first_name=request.POST['first_name']
-            account.middle_name = request.POST['middle_name']
-            account.last_name = request.POST['last_name']
-            account.address = request.POST['address']
-            account.phone = request.POST['phone']
-            account.email = request.POST['email']
-            account.father_name = request.POST['father_name']
-            account.mother_name = request.POST['mother_name']
-            account.grandfather_name = request.POST['grandfather_name']
-            account.spouse_name = request.POST['spouse_name']
-            account.save()
-            print(account.middle_name)
+        elif 'customer_id' in request.POST:
+            customer_id=request.POST['customer_id']
+            customer=CustomerProfile.objects.get(id=customer_id)
+            customer.first_name=request.POST['first_name']
+            customer.middle_name = request.POST['middle_name']
+            customer.last_name = request.POST['last_name']
+            customer.address = request.POST['address']
+            customer.phone = request.POST['phone']
+            customer.email = request.POST['email']
+            customer.father_name = request.POST['father_name']
+            customer.mother_name = request.POST['mother_name']
+            customer.grandfather_name = request.POST['grandfather_name']
+            customer.spouse_name = request.POST['spouse_name']
+            customer.save()
             return redirect("/accounts/viewaccount/")
     return render(request,'viewaccount.html')
 
