@@ -120,10 +120,24 @@ def withdraw(request):
     return render(request, 'withdraw.html',context)
 
 def transaction(request,id):
-    transaction=Transaction.objects.filter(account=id).order_by("-created_at")
-    print(transaction)
-    context={
-        'account_no':id,
-        'transaction':transaction
-    }
-    return render(request,'transaction.html',context)
+    if request.method=="POST":
+        start_date=request.POST['startdate']
+        end_date=request.POST['enddate']
+        account_no=request.POST['account_no']
+        print(start_date)
+        print(end_date)
+        print(account_no)
+        transaction=Transaction.objects.filter(account=account_no, created_at__range=[start_date,end_date])
+        context={
+            'transaction':transaction,
+            'account_no':account_no
+        }
+        return render(request,'transaction.html',context)
+    else:
+        transaction=Transaction.objects.filter(account=id).order_by("-created_at")
+        print(transaction)
+        context={
+            'account_no':id,
+            'transaction':transaction
+        }
+        return render(request,'transaction.html',context)
