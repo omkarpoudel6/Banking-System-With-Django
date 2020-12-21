@@ -2,8 +2,10 @@ from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
 from .forms import AccountCreationForm,DepositForm,WithdrawForm
 from .models import Account,CustomerProfile,Transaction
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url="/")
 def createAccount(request):
     if request.method=="POST":
         form=AccountCreationForm(request.POST)
@@ -24,6 +26,7 @@ def createAccount(request):
         }
         return render(request,'accountcreation.html',context)
 
+@login_required(login_url="/")
 def viewAccount(request):
     if request.method=="POST":
         if 'account_no' in request.POST:
@@ -63,6 +66,7 @@ def viewAccount(request):
             return redirect("/accounts/viewaccount/")
     return render(request,'viewaccount.html')
 
+@login_required(login_url="/")
 def deposit(request):
     if request.method=="POST":
         deposit_form=DepositForm(request.POST)
@@ -78,7 +82,7 @@ def deposit(request):
     else:
         return render(request,'deposit.html')
 
-
+@login_required(login_url="/")
 def withdraw(request):
     withdraw_form=WithdrawForm()
     if request.method == "POST":
@@ -119,6 +123,7 @@ def withdraw(request):
 
     return render(request, 'withdraw.html',context)
 
+@login_required(login_url="/")
 def transaction(request,id):
     if request.method=="POST":
         start_date=request.POST['startdate']
