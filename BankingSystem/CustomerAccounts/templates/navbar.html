@@ -6,12 +6,14 @@
     <li class="nav-item">
       <a class="nav-link" href="/accounts/viewaccount">View Account</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/accounts/deposit">Deposit</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/accounts/withdraw">Withdraw</a>
-    </li>
+    {% if user.account.emp_type == "03" %}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/deposit">Deposit</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/withdraw">Withdraw</a>
+      </li>
+    {% endif %}
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{user}}

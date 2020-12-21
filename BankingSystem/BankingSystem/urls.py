@@ -5,7 +5,9 @@ from Users.views import Login,logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',Login,name="login"),
+    path('login/',Login,name="login"),
     path('logout/',logout_view,name="logout"),
-    path('accounts/',include('CustomerAccounts.urls',namespace='accounts'))
+
+    path('accounts/',include('CustomerAccounts.urls',namespace='accounts')),
+    path('manager/',include('Admin.urls',namespace='manager'))
 ]
