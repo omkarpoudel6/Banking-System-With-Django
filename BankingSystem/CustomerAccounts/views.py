@@ -70,6 +70,7 @@ def viewAccount(request):
 def deposit(request):
     if request.method=="POST":
         deposit_form=DepositForm(request.POST)
+        print(deposit_form)
         if deposit_form.is_valid():
             print(deposit_form)
             deposit_form.save()

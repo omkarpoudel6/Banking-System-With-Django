@@ -17,7 +17,8 @@ class DepositForm(forms.ModelForm):
     def clean_account(self,*args,**kwargs):
         account_no=self.cleaned_data.get('account')
         print(account_no)
-        if not Account.objects.filter(accountNo=account_no):
+        account=Account.objects.filter(accountNo=account_no)
+        if account==None:
             raise forms.ValidationError('Invalid Account Number')
         else:
             return account_no
