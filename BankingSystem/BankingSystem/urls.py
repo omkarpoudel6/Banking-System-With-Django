@@ -8,7 +8,7 @@ urlpatterns = [
     path('login/',Login,name="login"),
     path('logout/',logout_view,name="logout"),
 
-    path('admin/',include('Users.urls',namespace='manager')),
+    path('manager/',include('Users.urls',namespace='manager')),
     path('accounts/',include('CustomerAccounts.urls',namespace='accounts')),
     # path('manager/',include('Admin.urls',namespace='manager'))
 ]
