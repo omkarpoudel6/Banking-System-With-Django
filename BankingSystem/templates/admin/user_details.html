@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">This is employee Details</h1>
+    <div class="row">
+        <div class="col-7">
+            <h4 class="text-center my-5">Personal Info</h4>
+            <img src="https://source.unsplash.com/200x200/?boy" class="rounded mx-auto d-block" alt="Image Failed To Load">
+            <table class="table my-5">
+              <tbody>
+                <tr>
+                  <td><strong>User ID</strong></td>
+                  <td>{{userobj.username}}</td>
+                </tr>
+                <tr>
+                  <td><strong>First Name</strong></td>
+                  <td>{{userobj.useraccount.first_name}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Middle Name</strong></td>
+                  <td>{{userobj.useraccount.middle_name}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Last Name</strong></td>
+                  <td>{{userobj.useraccount.last_name}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Branch</strong></td>
+                  <td>Itahari</td>
+                </tr>
+                <tr>
+                  <td><strong>Employee Type</strong></td>
+                  <td>{{userobj.useraccount.emp_type}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Email</strong></td>
+                  <td>{{userobj.useraccount.email}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="col-5 my-5">
+            <h4 class="text-center">Employee Status</h4>
+            <p>Total Account Created : 15 <a href="#">view</a></p>
+            <p>Total Credit Transaction :  1500 <a href="#">view</a></p>
+            <p>Total Debit Transaction : 1600 <a href="#">view</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

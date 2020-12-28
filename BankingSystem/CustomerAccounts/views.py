@@ -11,14 +11,18 @@ def createAccount(request):
         form=AccountCreationForm(request.POST)
         print(form)
         if form.is_valid():
+            print("form saved")
             form.save()
             print(request.POST['citizenship_no'])
             customer_id=CustomerProfile.objects.get(citizenship_no=request.POST['citizenship_no'])
             account_no=Account.objects.get(customer_id=customer_id)
+            print(account_no)
             context={
                 'account_no':account_no
             }
-        return render(request,'accountcreation.html',context)
+            return render(request,'accountcreation.html',context)
+        else:
+            return HttpResponse("Form Invalid")
     else:
         form=AccountCreationForm()
         context={

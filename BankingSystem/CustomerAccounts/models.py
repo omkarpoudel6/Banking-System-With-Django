@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib.auth.models import User
 import random
 # Create your models here.
 
@@ -19,6 +20,7 @@ class CustomerProfile(models.Model):
         ('O','OTHERS')
     )
 
+    user_id = models.CharField(max_length=10,blank=False,default="Null")
     first_name=models.CharField(max_length=30,blank=False)
     middle_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=False)
@@ -39,8 +41,9 @@ class CustomerProfile(models.Model):
         return str(self.first_name+" "+self.middle_name+" "+self.last_name)
 
 class Account(models.Model):
+    user_id=models.CharField(max_length=10,blank=False,default="Null")
     accountNo=models.CharField(max_length=12,blank=False)
-    customer_id=models.OneToOneField(CustomerProfile,on_delete=models.CASCADE)
+    customer_id=models.OneToOneField(CustomerProfile,on_delete=models.DO_NOTHING)
     balance=models.PositiveIntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
@@ -66,6 +69,7 @@ class Account(models.Model):
 
 
 class Transaction(models.Model):
+    user_id=models.CharField(max_length=10,blank=False,default="Null")
     account=models.CharField(max_length=12,blank=False)
     amount=models.PositiveIntegerField(blank=False)
     remarks=models.CharField(max_length=250,blank=False)
@@ -79,6 +83,12 @@ class Transaction(models.Model):
         if self.action=="Debit":
             return str(str(self.account) + "-" + str(self.amount) + "<" + str(self.remarks))
 
+class sample(models.Model):
+    name=models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+
 
 
 @receiver(post_save,sender=CustomerProfile)
@@ -87,6 +97,7 @@ def post_save_generate_account_no(sender,instance,created,**kwargs):
         # Account.objects.create(customer_id=instance)
         account = Account()
         account.customer_id = instance
+        account.user_id=instance.user_id
         account.accountNo = account.generate_accountNo(instance.account_type)
         account.save()
 

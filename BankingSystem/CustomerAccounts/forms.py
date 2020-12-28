@@ -12,7 +12,7 @@ class AccountCreationForm(forms.ModelForm):
 class DepositForm(forms.ModelForm):
     class Meta:
         model=Transaction
-        fields=['account','amount','remarks','action']
+        fields=['user_id','account','amount','remarks','action']
 
     def clean_account(self,*args,**kwargs):
         account_no=self.cleaned_data.get('account')
@@ -26,7 +26,7 @@ class DepositForm(forms.ModelForm):
 class WithdrawForm(forms.ModelForm):
     class Meta:
         model=Transaction
-        fields=['account','amount','remarks','action']
+        fields=['user_id','account','amount','remarks','action']
 
 # class CustomerProfileUpdateForm(forms.ModelForm):
 #     class Meta:
