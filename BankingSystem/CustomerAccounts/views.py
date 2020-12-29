@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 def createAccount(request):
     if request.method=="POST":
         form=AccountCreationForm(request.POST)
-        print(form)
         if form.is_valid():
             print("form saved")
             form.save()

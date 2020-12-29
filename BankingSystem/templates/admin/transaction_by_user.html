@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>This is transaction done by user</h2>
+    <div class="alert alert-primary" role="alert">
+      Transaction Done By User : {{search_userobj}}
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Account Number</th>
+          {% if action == "Credit" %}
+            <th scope="col">Credit</th>
+          {% elif action == "Debit" %}
+            <th scope="col">Debit</th>
+          {% elif action == "All" %}
+            <th scope="col">Credit</th>
+            <th scope="col">Debit</th>
+          {% endif %}
+          <th scope="col">Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for trans in transactions %}
+        <tr>
+          <td>{{trans.created_at}}</td>
+          <td>{{trans.account}}</td>
+          {% if action == "Credit" %}
+            <td>{{trans.amount}}</td>
+          {% elif action == "Debit" %}
+            <td>{{trans.amount}}</td>
+          {% elif action == "All" %}
+            {% if trans.action == "Credit" %}
+                <td>{{trans.amount}}</td>
+                <td>-</td>
+            {% elif trans.action == "Debit" %}
+                <td>-</td>
+                <td>{{trans.amount}}</td>
+            {% endif %}
+          {% endif %}
+          <td>{{trans.remarks}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</div>
+{{transactions}}
+{% for tran in transactions %}
+    {{trans.action}}
+    {{trans.amount}}
+{% endfor %}
+{% endblock %}

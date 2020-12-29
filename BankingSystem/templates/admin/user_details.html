@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="text-center">This is employee Details</h1>
     <div class="row">
-        <div class="col-7">
+        <div class="col-8">
             <h4 class="text-center my-5">Personal Info</h4>
             <img src="https://source.unsplash.com/200x200/?boy" class="rounded mx-auto d-block" alt="Image Failed To Load">
             <table class="table my-5">
@@ -40,13 +40,13 @@
               </tbody>
             </table>
         </div>
-        <div class="col-5 my-5">
-            <h4 class="text-center">Employee Status</h4>
-            <p class="text-center">Total Account Opened : {{account_opened}} <a href="#">view</a></p>
+        <div class="col-4 my-5">
+            <h4 class="text-left">Employee Status</h4>
+            <p class="text-left">Total Account Opened : {{account_opened}} <a href="/manager/account_opened_by_user/{{userobj.username}}/">view</a></p>
             {% if debit_transaction != 0 %}
-                <p class="text-center">Total Credit Transaction :  {{credit_transaction}} <a href="#">view</a></p>
-                <p class="text-center">Total Debit Transaction : {{debit_transaction}} <a href="#">view</a></p>
-                <p class="text-center">Total Transaction : {{total_transaction}} <a href="#">view</a></p>
+                <p class="text-left">Total Credit Transaction :  {{credit_transaction}} <a href="/manager/transaction_by_user/{{userobj.username}}/1/">view</a></p>
+                <p class="text-left">Total Debit Transaction : {{debit_transaction}} <a href="/manager/transaction_by_user/{{userobj.username}}/2/">view</a></p>
+                <p class="text-left">Total Transaction : {{total_transaction}} <a href="/manager/transaction_by_user/{{userobj.username}}/3/">view</a></p>
             {% endif %}
         </div>
     </div>
