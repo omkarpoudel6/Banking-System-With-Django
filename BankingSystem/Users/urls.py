@@ -8,5 +8,6 @@ urlpatterns=[
     path('create_user/',views.create_user,name='create_user'),
     path('user_info/',views.user_info,name='user_info'),
     path('user_detail/<int:id>/',views.user_detail,name='user_detail'),
+    path('update_user_profile',views.update_user_profile,name='update_user_profile'),
     path('change_user_password',views.change_user_password,name='change_user_password')
 ]
