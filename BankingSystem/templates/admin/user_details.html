@@ -42,9 +42,12 @@
         </div>
         <div class="col-5 my-5">
             <h4 class="text-center">Employee Status</h4>
-            <p>Total Account Created : 15 <a href="#">view</a></p>
-            <p>Total Credit Transaction :  1500 <a href="#">view</a></p>
-            <p>Total Debit Transaction : 1600 <a href="#">view</a></p>
+            <p class="text-center">Total Account Opened : {{account_opened}} <a href="#">view</a></p>
+            {% if debit_transaction != 0 %}
+                <p class="text-center">Total Credit Transaction :  {{credit_transaction}} <a href="#">view</a></p>
+                <p class="text-center">Total Debit Transaction : {{debit_transaction}} <a href="#">view</a></p>
+                <p class="text-center">Total Transaction : {{total_transaction}} <a href="#">view</a></p>
+            {% endif %}
         </div>
     </div>
 </div>

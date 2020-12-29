@@ -58,6 +58,8 @@ class Account(models.Model):
         self.accountNo = account_no
         return str(self.accountNo)
 
+
+
     def get_availableBalance(self,balance):
         if balance==0:
             return str(0)
