@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <h2>This is transaction done by user</h2>
+<div class="container my-4">
     <div class="alert alert-primary" role="alert">
       Transaction Done By User : {{search_userobj}}
     </div>
@@ -45,9 +44,4 @@
       </tbody>
     </table>
 </div>
-{{transactions}}
-{% for tran in transactions %}
-    {{trans.action}}
-    {{trans.amount}}
-{% endfor %}
 {% endblock %}
