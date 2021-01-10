@@ -88,7 +88,7 @@ class Transaction(models.Model):
 class Cheque(models.Model):
     account_No=models.CharField(max_length=12,blank=False)
     cheque_No=models.CharField(max_length=8,blank=False)
-    spend=models.BooleanField()
+    spend=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
