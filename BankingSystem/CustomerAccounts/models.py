@@ -85,13 +85,14 @@ class Transaction(models.Model):
         if self.action=="Debit":
             return str(str(self.account) + "-" + str(self.amount) + "<" + str(self.remarks))
 
-class sample(models.Model):
-    name=models.CharField(max_length=10)
+class Cheque(models.Model):
+    account_No=models.CharField(max_length=12,blank=False)
+    cheque_No=models.CharField(max_length=8,blank=False)
+    spend=models.BooleanField()
+    created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
-
-
+        return str(self.account_No,"+",self.cheque_No)
 
 @receiver(post_save,sender=CustomerProfile)
 def post_save_generate_account_no(sender,instance,created,**kwargs):

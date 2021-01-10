@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import CustomerProfile,Account,Transaction
+from .models import CustomerProfile,Account,Transaction,Cheque
 #
 # # Register your models here.
 admin.site.register(CustomerProfile)
 # admin.site.register(Account)
 # admin.site.register(Transaction)
+admin.site.register(Cheque)
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
