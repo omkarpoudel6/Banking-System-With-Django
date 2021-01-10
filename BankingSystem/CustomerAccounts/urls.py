@@ -8,5 +8,6 @@ urlpatterns=[
     path('viewaccount/',views.viewAccount,name='view_account'),
     path('withdraw/',views.withdraw,name='withdraw_money'),
     path('deposit/',views.deposit,name='deposie_money'),
+    path('printcheque/',views.printChequest,name='print_cheque'),
     path('transaction/<int:id>/',views.transaction,name='transaction')
 ]

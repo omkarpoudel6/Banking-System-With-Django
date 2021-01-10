@@ -150,3 +150,7 @@ def transaction(request,id):
             'transaction':transaction
         }
         return render(request,'transaction.html',context)
+
+@login_required(login_url='/login')
+def printChequest(reqeust):
+    return render(reqeust,'printcheque.html')

@@ -76,6 +76,7 @@ class Transaction(models.Model):
     amount=models.PositiveIntegerField(blank=False)
     remarks=models.CharField(max_length=250,blank=False)
     action=models.CharField(max_length=6,blank=False)
+    cheque_No=models.CharField(max_length=8,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
