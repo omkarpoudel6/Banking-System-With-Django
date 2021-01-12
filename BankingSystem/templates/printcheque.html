@@ -6,32 +6,45 @@
         <div class="col-md-8">
             <div class="accountNodiv">
                 <form method="post">
+                    {% csrf_token %}
                   `<div class="form-group">
                     <label for="formGroupExampleInput">AccountNo</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" required>
+                    <input type="text" class="form-control" name="accountNo" id="formGroupExampleInput" placeholder="Example input" required>
                   </div>
-                  <button type="submit" class="btn btn-success">Success</button>
+                  <button type="submit" class="btn btn-success">View</button>
                 </form>`
             </div>
-            <div class="chequeprintdiv">
-                <h3>THis is cheque print division</h3>
-                <form method="post">
-                  <div class="form-group">
-                    <label for="chequestartnumber">Cheque Start Number</label>
-                    <input type="text" class="form-control" id="chequestartnumber" value="00000000" required readonly>
-                  </div>
-                  <div class="form-group">
-                    <label for="numberofcheque">Number of Cheque</label>
-                    <input type="integer" class="form-control" id="numberofcheque" required>
-                  </div>
-                  <button type="submit" class="btn btn-success">Confirm</button>
-                </form>
-            </div>
+            {% if showchequeprintform == True %}
+                <div class="chequeprintdiv">
+                    <div class="alert alert-success" role="alert">
+                      Enter Cheque Detail Below
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label for="chequestartnumber">Cheque Start Number</label>
+                        <input type="text" class="form-control" id="chequestartnumber" name="chequestartnumber" value="00000000" required readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="numberofcheque">Number of Cheque</label>
+                        <input type="integer" class="form-control" id="numberofcheque" name="numberofcheque" required>
+                      </div>
+                      <button type="submit" class="btn btn-success">Confirm</button>
+                    </form>
+                </div>
+            {% endif %}
 
         </div>
-        <div class="col-md-4">
-            <h3>Account Cheque Detail</h3>
-        </div>
+        {% if showchequeprintform == True %}
+            <div class="col-md-4">
+                <h3>Account Cheque Detail</h3>
+
+                <div class="alert alert-warning" role="alert">
+                  Unused Cheques : {{totalunspendcheque}} <a href="#">View</a>
+                </div>
+
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

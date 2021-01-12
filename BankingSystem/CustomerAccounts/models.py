@@ -42,7 +42,7 @@ class CustomerProfile(models.Model):
 
 class Account(models.Model):
     user_id=models.CharField(max_length=10,blank=False,default="Null")
-    accountNo=models.CharField(max_length=12,blank=False)
+    accountNo=models.CharField(max_length=12,blank=False,unique=True)
     customer_id=models.OneToOneField(CustomerProfile,on_delete=models.DO_NOTHING)
     balance=models.PositiveIntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)

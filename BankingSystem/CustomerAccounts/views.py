@@ -1,7 +1,7 @@
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
 from .forms import AccountCreationForm,DepositForm,WithdrawForm
-from .models import Account,CustomerProfile,Transaction
+from .models import Account,CustomerProfile,Transaction,Cheque
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -152,5 +152,18 @@ def transaction(request,id):
         return render(request,'transaction.html',context)
 
 @login_required(login_url='/login')
-def printChequest(reqeust):
-    return render(reqeust,'printcheque.html')
+def printChequest(request):
+    context={}
+    if request.method == "POST":
+        if 'accountNo' in request.POST:
+            account_no=request.POST['accountNo']
+            if Account.objects.filter(accountNo=account_no):
+                totalchequeissued=Cheque.objects.filter(account_No=account_no,spend=False).count()
+                context['totalunspendcheque']=totalchequeissued
+                context['showchequeprintform']=True
+                # return HttpResponse("Account Exists")
+            else:
+                return HttpResponse("Account Don't Exists")
+        elif 'chequestartnumber' in request.POST:
+            return HttpResponse("For Printing Cheque")
+    return render(request,'printcheque.html',context)
