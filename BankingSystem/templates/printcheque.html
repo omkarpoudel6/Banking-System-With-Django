@@ -2,5 +2,36 @@
 {% block content %}
 <div class="container">
     <h3>THis is printing cheque page</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="accountNodiv">
+                <form method="post">
+                  `<div class="form-group">
+                    <label for="formGroupExampleInput">AccountNo</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">Success</button>
+                </form>`
+            </div>
+            <div class="chequeprintdiv">
+                <h3>THis is cheque print division</h3>
+                <form method="post">
+                  <div class="form-group">
+                    <label for="chequestartnumber">Cheque Start Number</label>
+                    <input type="text" class="form-control" id="chequestartnumber" value="00000000" required readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="numberofcheque">Number of Cheque</label>
+                    <input type="integer" class="form-control" id="numberofcheque" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">Confirm</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <h3>Account Cheque Detail</h3>
+        </div>
+    </div>
 </div>
 {% endblock %}
