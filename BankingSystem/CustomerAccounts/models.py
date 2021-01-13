@@ -88,12 +88,12 @@ class Transaction(models.Model):
 
 class Cheque(models.Model):
     account_No=models.CharField(max_length=12,blank=False)
-    cheque_No=models.CharField(max_length=8,blank=False)
+    cheque_No=models.CharField(max_length=8,blank=False,unique=True)
     spend=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.account_No,"+",self.cheque_No)
+        return f"{self.cheque_No}"
 
 @receiver(post_save,sender=CustomerProfile)
 def post_save_generate_account_no(sender,instance,created,**kwargs):

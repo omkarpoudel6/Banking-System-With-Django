@@ -17,19 +17,21 @@
             {% if showchequeprintform == True %}
                 <div class="chequeprintdiv">
                     <div class="alert alert-success" role="alert">
-                      Enter Cheque Detail Below
+                        Account Number : <strong>{{accountno}}</strong><br>
+                        Enter Cheque Detail Below<br>
+                        Last Cheque Number = {{lastchequenumber}}
                     </div>
                     <form method="post">
                         {% csrf_token %}
                       <div class="form-group">
                         <label for="chequestartnumber">Cheque Start Number</label>
-                        <input type="text" class="form-control" id="chequestartnumber" name="chequestartnumber" value="00000000" required readonly>
+                        <input type="integer" class="form-control" id="chequestartnumber" name="chequestartnumber" required>
                       </div>
                       <div class="form-group">
                         <label for="numberofcheque">Number of Cheque</label>
                         <input type="integer" class="form-control" id="numberofcheque" name="numberofcheque" required>
                       </div>
-                      <button type="submit" class="btn btn-success">Confirm</button>
+                      <button type="button" class="btn btn-success" onclick="clickprintbutton()">Confirm</button>
                     </form>
                 </div>
             {% endif %}
@@ -39,12 +41,29 @@
             <div class="col-md-4">
                 <h3>Account Cheque Detail</h3>
 
-                <div class="alert alert-warning" role="alert">
-                  Unused Cheques : {{totalunspendcheque}} <a href="#">View</a>
-                </div>
+                {% if totalunspendcheque < 5 %}
+                    <div class="alert alert-warning" role="alert">
+                      Unused Cheques : {{totalunspendcheque}} <a href="#">View</a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                      Unused Cheques : {{totalunspendcheque}} <a href="#">View</a>
+                    </div>
+                {% endif %}
 
             </div>
         {% endif %}
     </div>
 </div>
+<script>
+function clickprintbutton(){
+    var chequestartnumber=parseInt(document.getElementById("chequestartnumber").value)
+    var numberofcheques=parseInt(document.getElementById("numberofcheque").value)
+    console.log(chequestartnumber)
+    console.log(chequestartnumber + 1)
+    console.log(numberofcheques)
+    alert("button clicked")
+}
+
+</script>
 {% endblock %}

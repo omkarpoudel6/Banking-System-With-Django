@@ -159,8 +159,11 @@ def printChequest(request):
             account_no=request.POST['accountNo']
             if Account.objects.filter(accountNo=account_no):
                 totalchequeissued=Cheque.objects.filter(account_No=account_no,spend=False).count()
+                lastchequenumber=Cheque.objects.last()
                 context['totalunspendcheque']=totalchequeissued
                 context['showchequeprintform']=True
+                context['lastchequenumber']=lastchequenumber
+                context['accountno']=account_no
                 # return HttpResponse("Account Exists")
             else:
                 return HttpResponse("Account Don't Exists")
