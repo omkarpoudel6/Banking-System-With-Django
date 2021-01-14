@@ -5,7 +5,7 @@ from .models import CustomerProfile,Account,Transaction,Cheque
 admin.site.register(CustomerProfile)
 # admin.site.register(Account)
 # admin.site.register(Transaction)
-admin.site.register(Cheque)
+# admin.site.register(Cheque)
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
@@ -14,3 +14,7 @@ class AccountAdmin(admin.ModelAdmin):
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
     readonly_fields = ['user_id','account','amount','remarks','action']
+
+@admin.register(Cheque)
+class ChequeAdmin(admin.ModelAdmin):
+    readonly_fields = ['account_No','cheque_No','spend']

@@ -1,5 +1,8 @@
 from django.http import HttpResponse, request
 from django.shortcuts import render, redirect
+
+from django.db import IntegrityError
+
 from .forms import AccountCreationForm,DepositForm,WithdrawForm
 from .models import Account,CustomerProfile,Transaction,Cheque
 from django.contrib.auth.decorators import login_required
@@ -164,9 +167,19 @@ def printChequest(request):
                 context['showchequeprintform']=True
                 context['lastchequenumber']=lastchequenumber
                 context['accountno']=account_no
-                # return HttpResponse("Account Exists")
             else:
                 return HttpResponse("Account Don't Exists")
         elif 'chequestartnumber' in request.POST:
-            return HttpResponse("For Printing Cheque")
+            account_no=request.POST['accountno']
+            chequestartnumber=request.POST['chequestartnumber']
+            noofcheques=request.POST['numberofcheque']
+            try:
+                for x in range(int(chequestartnumber),int(chequestartnumber)+int(noofcheques)):
+                    cheque=Cheque()
+                    cheque.account_No=account_no
+                    cheque.cheque_No=x
+                    cheque.save()
+                    context['message']='Cheque Printed!!!'
+            except IntegrityError:
+                context['errormessage']='Cheque Number already Exists'
     return render(request,'printcheque.html',context)

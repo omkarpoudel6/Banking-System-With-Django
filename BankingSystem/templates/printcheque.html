@@ -4,6 +4,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
+            {% if message %}
+                <div class="alert alert-primary my-3" role="alert">
+                  {{message}}
+                </div>
+            {% endif %}
+            {% if errormessage %}
+                <div class="alert alert-warning my-3" role="alert">
+                  {{errormessage}}
+                </div>
+            {% endif %}
             <div class="accountNodiv">
                 <form method="post">
                     {% csrf_token %}
@@ -23,6 +33,7 @@
                     </div>
                     <form method="post">
                         {% csrf_token %}
+                      <input type="hidden" name="accountno" value="{{accountno}}">
                       <div class="form-group">
                         <label for="chequestartnumber">Cheque Start Number</label>
                         <input type="integer" class="form-control" id="chequestartnumber" name="chequestartnumber" required>
@@ -54,7 +65,7 @@
                 </div>
 
                 <h4>Cheque Numbers</h4>
-                <div class="my-3" id="ChequeNumber" style="height:400px;width:290px;;overflow:auto;">
+                <div class="my-3" id="ChequeNumber" style="height:400px;width:290px;overflow:auto;">
                 </div>
 
             </div>
