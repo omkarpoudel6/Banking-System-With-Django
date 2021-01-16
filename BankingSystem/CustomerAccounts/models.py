@@ -120,18 +120,20 @@ def post_save_add_balance_in_account(sender,instance,created,**kwargs):
 
 @receiver(pre_save,sender=Transaction)
 def pre_save_check_chequeNo_is_already_used_or_not(sender,instance,**kwargs):
-    cheque_no=instance.cheque_No
-    print(cheque_no)
-    cheque=Cheque.objects.filter(cheque_No=cheque_no,spend=False)
-    print(cheque)
-    if cheque:
-        cheque2=Cheque.objects.get(cheque_No=cheque_no,spend=False)
-        print(cheque2.spend)
-        cheque2.spend=True
-        cheque2.save()
-        print(cheque2.spend)
-    else:
-        print("Cheque Already in use")
-        raise forms.ValidationError("Cheque Number Error")
+    if instance.action=="Debit":
+        cheque_no=instance.cheque_No
+        print(cheque_no)
+        cheque=Cheque.objects.filter(cheque_No=cheque_no,spend=False)
+        print(cheque)
+        if cheque:
+            cheque2=Cheque.objects.get(cheque_No=cheque_no,spend=False)
+            print(cheque2.spend)
+            cheque2.spend=True
+            cheque2.save()
+            print(cheque2.spend)
+        else:
+            print("Cheque Already in use")
+            raise forms.ValidationError("Cheque Number Error")
+
 
 
