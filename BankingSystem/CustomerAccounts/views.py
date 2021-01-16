@@ -1,4 +1,5 @@
-from django.http import HttpResponse, request
+from django.contrib import messages
+from django.http import HttpResponse, request, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from django.db import IntegrityError
@@ -6,6 +7,8 @@ from django.db import IntegrityError
 from .forms import AccountCreationForm,DepositForm,WithdrawForm
 from .models import Account,CustomerProfile,Transaction,Cheque
 from django.contrib.auth.decorators import login_required
+
+from django.forms import ValidationError
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -113,21 +116,22 @@ def withdraw(request):
                 }
                 return render(request, 'withdraw.html', context)
         if 'amount' in request.POST:
+            context={}
             withdrawForm=WithdrawForm(request.POST)
             print(withdrawForm)
             if withdrawForm.is_valid():
-                withdrawForm.save()
-                return redirect("/accounts/withdraw/")
+                try:
+                    withdrawForm.save()
+                    messages.success(request, 'Transaction Sucessfull')
+                    return HttpResponseRedirect("/accounts/withdraw")
+                except ValidationError:
+                    context['error']='Cheque Number Error'
             else:
-                context={
-                    'error':'Invalid Balance'
-                }
-                return render(request,'withdraw.html',context)
-
+                context['error']='Balance or Cheque Number Error'
+            return render(request,'withdraw.html',context)
     context={
         'form':withdraw_form
     }
-
     return render(request, 'withdraw.html',context)
 
 @login_required(login_url="/login")

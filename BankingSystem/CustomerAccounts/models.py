@@ -1,7 +1,9 @@
 from django.db import models
+from django import forms
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,pre_save
 from django.contrib.auth.models import User
+from django.forms import ValidationError
 import random
 # Create your models here.
 
@@ -116,7 +118,20 @@ def post_save_add_balance_in_account(sender,instance,created,**kwargs):
         account.balance = int(account.balance) - int(instance.amount)
         account.save()
 
-# @receiver(post_save,sender=Transaction)
-# def post_sace_reduce_balance_in_account(sender,instance,created,**kwargs):
-#     if created and instance.action=="Debit":
-#         account
+@receiver(pre_save,sender=Transaction)
+def pre_save_check_chequeNo_is_already_used_or_not(sender,instance,**kwargs):
+    cheque_no=instance.cheque_No
+    print(cheque_no)
+    cheque=Cheque.objects.filter(cheque_No=cheque_no,spend=False)
+    print(cheque)
+    if cheque:
+        cheque2=Cheque.objects.get(cheque_No=cheque_no,spend=False)
+        print(cheque2.spend)
+        cheque2.spend=True
+        cheque2.save()
+        print(cheque2.spend)
+    else:
+        print("Cheque Already in use")
+        raise forms.ValidationError("Cheque Number Error")
+
+

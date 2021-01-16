@@ -26,7 +26,7 @@ class DepositForm(forms.ModelForm):
 class WithdrawForm(forms.ModelForm):
     class Meta:
         model=Transaction
-        fields=['user_id','account','amount','remarks','action']
+        fields=['user_id','account','amount','cheque_No','remarks','action']
 
 # class CustomerProfileUpdateForm(forms.ModelForm):
 #     class Meta:
