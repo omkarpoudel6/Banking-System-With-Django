@@ -134,6 +134,7 @@ def pre_save_check_chequeNo_is_already_used_or_not(sender,instance,**kwargs):
         else:
             print("Cheque Already in use")
             raise forms.ValidationError("Cheque Number Error")
+        print("Completed")
 
 
 
